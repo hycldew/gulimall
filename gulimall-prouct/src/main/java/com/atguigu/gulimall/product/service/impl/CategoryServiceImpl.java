@@ -56,7 +56,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .sorted(Comparator.comparingInt(CategoryEntity::getSort))
                 .collect(Collectors.toList());
 
-        return null;
+        return collect;
     }
 
 
