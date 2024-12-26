@@ -41,20 +41,22 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //2.1.找到所有的一级分类
         List<CategoryEntity> collectParent = categoryEntityList.stream().filter(e -> e.getParentCid() == 0)
                 .peek(e -> e.setChildren(getChildrens(e,categoryEntityList)))
-                .sorted(Comparator.comparingInt(CategoryEntity::getSort))
-                .collect(Collectors.toList());
+                .sorted((menu1, menu2) -> {
+                    return (menu1.getSort()==null?0:menu1.getSort()) - (menu2.getSort()==null?0:menu2.getSort());
+                }).collect(Collectors.toList());
 
 
         return collectParent;
     }
 
     // 递归查找
-    private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> all){
+    private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> all) {
         List<CategoryEntity> collect = all.stream()
                 .filter(e -> Objects.equals(e.getParentCid(), root.getCatId()))
                 .peek(e -> e.setChildren(getChildrens(e, all)))
-                .sorted(Comparator.comparingInt(CategoryEntity::getSort))
-                .collect(Collectors.toList());
+                .sorted((menu1,menu2)->{
+                    return (menu1.getSort()==null?0:menu1.getSort()) - (menu2.getSort()==null?0:menu2.getSort());
+                }).collect(Collectors.toList());
 
         return collect;
     }
