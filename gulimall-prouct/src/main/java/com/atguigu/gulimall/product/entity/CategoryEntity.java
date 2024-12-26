@@ -2,6 +2,7 @@ package com.atguigu.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import lombok.Data;
 
 /**
  * 商品三级分类
- * 
+ *
  * @author young
  * @email 2044124998@qq.com
  * @date 2024-09-08 14:33:32
@@ -42,6 +43,7 @@ public class CategoryEntity implements Serializable {
 	/**
 	 * 是否显示[0-不显示，1显示]
 	 */
+	@TableLogic(value = "1",delval = "0")
 	private Integer showStatus;
 	/**
 	 * 排序
